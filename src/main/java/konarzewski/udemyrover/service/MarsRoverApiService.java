@@ -1,8 +1,11 @@
 package konarzewski.udemyrover.service;
 
+import konarzewski.udemyrover.dto.Camera;
 import konarzewski.udemyrover.dto.HomeDto;
+import konarzewski.udemyrover.repository.PreferencesRepository;
 import konarzewski.udemyrover.response.MarsPhoto;
 import konarzewski.udemyrover.response.MarsRoverApiResponse;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.web.client.RestTemplate;
 
@@ -16,6 +19,9 @@ public class MarsRoverApiService {
     private static final String API_KEY = "kVBXO7R76SwS8bbEwtYcNo7zlXn5bmxmZc2Bf7ns";
 
     private Map<String, List<String>> validCameras = new HashMap<>();
+
+    @Autowired
+    private PreferencesRepository preferencesRepo;
 
     public MarsRoverApiService() {
         validCameras.put("Opportunity", Arrays.asList("FHAZ", "RHAZ", "NAVCAM", "PANCAM", "MINITES"));
@@ -36,11 +42,28 @@ public class MarsRoverApiService {
                     assert apiResponse != null;
                     photos.addAll(apiResponse.getPhotos());
                 });
-
         response.setPhotos(photos);
 
         return response;
     }
+/*
+
+    public List<String> getApiUrlEndpoint2(HomeDto homeDto) throws InvocationTargetException, IllegalAccessException {
+        List<String> urls = new ArrayList<>();
+
+        for (Camera camera : homeDto.getCameras()) {
+            System.out.println(Boolean.TRUE.equals(camera.getActive()));
+            if (Boolean.TRUE.equals(camera.getActive())) {
+                if (validCameras.get(homeDto.getMarsApiRoverData()).contains(camera.getAbbreviation())) {
+                    urls.add("https://api.nasa.gov/mars-photos/api/v1/rovers/" + homeDto.getMarsApiRoverData() +
+                            "/photos?sol=" + homeDto.getMarsSol() + "&api_key=" + API_KEY + "&camera=" + camera.getAbbreviation());
+                }
+            }
+        }
+
+        return urls;
+    }
+*/
 
     public List<String> getApiUrlEndpoint(HomeDto homeDto) throws InvocationTargetException, IllegalAccessException {
         List<String> urls = new ArrayList<>();
@@ -48,10 +71,13 @@ public class MarsRoverApiService {
         Method[] methods = homeDto.getClass().getMethods();
 
         for (Method method : methods) {
-            if (method.getName().contains("getCamera") && Boolean.TRUE.equals(method.invoke(homeDto))) {
-                String cameraName = method.getName().split("getCamera")[1].toUpperCase();
-                if (validCameras.get(homeDto.getMarsApiRoverData()).contains(cameraName)) {
-                    urls.add("https://api.nasa.gov/mars-photos/api/v1/rovers/" + homeDto.getMarsApiRoverData() + "/photos?sol=" + homeDto.getMarsSol() + "&api_key=" + API_KEY + "&camera=" + cameraName);
+            if (method.getName().contains("getCamera")) {
+//                System.out.println(Boolean.TRUE.equals(method.invoke(homeDto)));
+                if (method.getName().contains("getCamera") && Boolean.TRUE.equals(method.invoke(homeDto))) {
+                    String cameraName = method.getName().split("getCamera")[1].toUpperCase();
+                    if (validCameras.get(homeDto.getMarsApiRoverData()).contains(cameraName)) {
+                        urls.add("https://api.nasa.gov/mars-photos/api/v1/rovers/" + homeDto.getMarsApiRoverData() + "/photos?sol=" + homeDto.getMarsSol() + "&api_key=" + API_KEY + "&camera=" + cameraName);
+                    }
                 }
             }
         }
@@ -91,5 +117,14 @@ public class MarsRoverApiService {
 
     public Map<String, List<String>> getValidCameras() {
         return validCameras;
+    }
+
+    public HomeDto save(HomeDto homeDto) {
+        return preferencesRepo.save(homeDto);
+
+    }
+
+    public HomeDto findByUserId(Long userId) {
+        return preferencesRepo.findByUserId(userId);
     }
 }

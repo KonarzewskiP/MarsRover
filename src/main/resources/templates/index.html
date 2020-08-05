@@ -10,27 +10,18 @@
 
 <div class="container">
     <h2>Welcome to the Mars Rover API Web App</h2>
-
-    <form method="get" action="" id="frmRoverType">
-        <!--  th:field pobiera dane z kontrolera -->
+<!-- method=get send parameters to url address. Since we are using "post" we need to get parameters from the object.
+ in this case homeDto. -->
+    <form method="post" action="" id="frmRoverType">
+        <!--  th:field load the data from controller class -->
         <input type="hidden" th:field="${homeDto.marsApiRoverData}"/>
+        <input type="hidden" th:field="${homeDto.userId}"/>
         <!--<input type="hidden"  id="marsApiRoverData" name="marsApiRoverData" value=""/>-->
         <div class="btn-group btn-group-lg" role="group" aria-label="Basic example" style="margin: 2em 0em">
             <button type="button" class="btn btn-secondary" id="marsApiCuriosity">Curiosity</button>
             <button type="button" class="btn btn-secondary" id="marsApiOpportunity">Opportunity</button>
             <button type="button" class="btn btn-secondary" id="marsApiSpirit">Spirit</button>
         </div>
-
-        <!--        Pobieram Map<String, List<String>> validCameras     -->
-        <!--        <div th:if="${homeDto.marsApiRoverData == 'Opportunity' || homeDto.marsApiRoverData == ''}">
-                    <div th:text="${validCameras.get('Opportunity')}"></div>
-                </div>
-                <div th:if="${homeDto.marsApiRoverData == 'Curiosity'}">
-                    <div th:text="${validCameras.get('Curiosity')}"></div>
-                </div>
-                <div th:if="${homeDto.marsApiRoverData == 'Spirit'}">
-                    <div th:text="${validCameras.get('Spirit')}"></div>
-                </div>-->
 
         <div class="row">
             <div class="col-12 col-md-4">
@@ -157,7 +148,7 @@
     </div>
 </div>
 
-<script type="text/javascript" src="/js/index.js"></script>
+<script type="text/javascript" src="../js/index.js"></script>
 
 </body>
 </html>
