@@ -1,17 +1,13 @@
 package konarzewski.udemyrover.web;
 
-import konarzewski.udemyrover.dto.Camera;
 import konarzewski.udemyrover.dto.HomeDto;
-import konarzewski.udemyrover.repository.PreferencesRepository;
 import konarzewski.udemyrover.response.MarsRoverApiResponse;
 import konarzewski.udemyrover.service.MarsRoverApiService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;
-import org.springframework.util.StringUtils;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestAttribute;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 import java.lang.reflect.InvocationTargetException;
@@ -38,7 +34,6 @@ public class HomeController {
         }
 
         MarsRoverApiResponse roverData = roverService.getRoverData(homeDto);
-        //umozliwia dostep do roverData oraz homeDto ze strony index
         model.addAttribute("roverData", roverData);
         model.addAttribute("homeDto", homeDto);
         model.addAttribute("validCameras", roverService.getValidCameras().get(homeDto.getMarsApiRoverData()));
@@ -76,33 +71,3 @@ public class HomeController {
         return "redirect:/?userId=" + homeDto.getUserId();
     }
 }
-/*
-    @GetMapping("/")
-    public String getHomeView(ModelMap model, HomeDto homeDto) throws InvocationTargetException, IllegalAccessException {
-        if (StringUtils.isEmpty(homeDto.getMarsApiRoverData())) {
-            homeDto.setMarsApiRoverData("Opportunity");
-        }
-        if (homeDto.getMarsSol() == null) {
-            homeDto.setMarsSol(1);
-        }
-
-        homeDto.addNewCamera(new Camera("cameraFhaz", "FHAZ", false, "Front Hazard Avoidance Camera"));
-        homeDto.addNewCamera(new Camera("cameraRhaz", "RHAZ", false, "Rear Hazard Avoidance Camera"));
-        homeDto.addNewCamera(new Camera("cameraMast", "MAST", false, "Mast Camera"));
-        homeDto.addNewCamera(new Camera("cameraChemcam", "CHEMCAM", false, "Chemistry and Camera Complex"));
-        homeDto.addNewCamera(new Camera("cameraMahli", "MAHLI", false, "Mars Hand Lens Imager"));
-        homeDto.addNewCamera(new Camera("cameraMardi", "MARDI", false, "Mars Descent Imager"));
-        homeDto.addNewCamera(new Camera("cameraNavcam", "NAVCAM", false, "Navigation Camera"));
-        homeDto.addNewCamera(new Camera("cameraPancam", "PANCAM", false, "Panoramic Camera"));
-        homeDto.addNewCamera(new Camera("cameraMinites", "MINITIES", false, "Miniature Thermal Emission Spectrometer (Mini-TES)"));
-
-
-        MarsRoverApiResponse roverData = roverService.getRoverData(homeDto);
-        //umozliwia dostep do roverData oraz homeDto ze strony index
-        model.addAttribute("roverData", roverData);
-        model.addAttribute("homeDto", homeDto);
-        model.addAttribute("validCameras", roverService.getValidCameras().get(homeDto.getMarsApiRoverData()));
-
-        return "index";
-    }
-    */
