@@ -1,4 +1,4 @@
-<html xmlns:th="http://thymeleaf.org">
+<html xmlns:th="http://www.thymeleaf.org">
 <head>
     <title>Mars Rover API App</title>
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.0/css/bootstrap.min.css"
@@ -21,44 +21,47 @@
             <button type="button" class="btn btn-secondary" id="marsApiSpirit">Spirit</button>
         </div>
 
+        <!--Each form control requires a NAME attribute. The NAME attribute  identifies the form control and is
+                 sent to the server with the value of the option(s) the user select.-->
+        <!--The VALUE attribute indicates the value that is sent to the server for the selected option. The NAME
+        attribute is sent to the server with the VALUE of the option the user selects. -->
+        <!--The FOR attribute states which form control the label belongs to. The value of the FOR attribute
+         matches that of the ID attribute on the form control it is labelling.-->
+        <!--Every HTML element can carry the ID attribute. It is used to uniquely identify that element from
+         other elements on the page-->
 
 
-        <div class="row" id="marsRoverCamera">
-            <div class="col-12 col-md-4">
-                <div class="form-check">
-                    <input class="form-check-input" type="checkbox" th:field="${homeDto.cameraNavcam}">
-                    <label class="form-check-label" for="cameraNavcam1">
-                        Navigation Camera
-                    </label>
-                </div>
-            </div>
-            <div class="col-12 col-md-4">
-                <div class="form-check">
-                    <input class="form-check-input" type="checkbox" th:field="${homeDto.cameraPancam}">
-                    <label class="form-check-label" for="cameraPancam1">
-                        Panoramic Camera
-                    </label>
-                </div>
-            </div>
-            <div class="col-12 col-md-4">
-                <div class="form-check">
-                    <input class="form-check-input" type="checkbox" th:field="${homeDto.cameraMinites}">
-                    <label class="form-check-label" for="cameraMinites1">
-                        Miniature Thermal Emission Spectrometer (Mini-TES)
-                    </label>
-                </div>
+        <!--<input class="form-check-input" name="cameraModel" type="checkbox" th:id="${camera.getName()}"
+               th:value="${camera.getActive()}" >-->
+<!--
+        <input class="form-check-input" name="defaultCheck1" type="checkbox" value="" id="defaultCheck1">
+        <label class="form-check-label" for="defaultCheck1">
+            Description
+        </label>-->
+
+<!--        <input class="form-check-input" name="cameraModel" type="checkbox" th:field="*{cameras.get(__${iter.index}__).active}">-->
+
+<!--        <input class="form-check-input" name="cameraModel" type="checkbox" th:field="*{cameras}" th:value="*{getCameras().get(__${iter.index}__).active}">-->
+
+        <div class="row">
+            <div class="form-check col-md-4 col-sm-12" th:each="camera,iter : ${homeDto.cameras}" th:object="${homeDto}">
+                <input class="form-check-input" name="cameraModel" type="checkbox" th:field="*{cameras[__${iter.index}__].active}">
+                <label class="form-check-label" th:for="${camera.name+'1'}" th:text="${camera.description}">
+                    Description
+                </label>
             </div>
         </div>
-
-
 
         <div class="form-group">
             <label for="marsSol" class="col-form-label-lg"> Mars Sol (aka Mars Day):</label>
             <input class="form-control form-control-lg" type="number" th:field="${homeDto.marsSol}" min="0"/>
             <!--            <input  class="form-control form-control-lg" type="number" id="marsSol" name="marsSol" min="1" value="1"/>-->
         </div>
-        <button type="submit" class="btn btn-primary btn-lg">Submit</button>
-
+        <div class="row">
+            <div class="col-3 col-md-2">
+                <button type="submit" class="btn btn-primary btn-lg">Submit</button>
+            </div>
+        </div>
     </form>
 
     <!--    <img th:each="photo : ${roverData.photos}" th:src="${photo.imgSrc}">-->
@@ -77,8 +80,7 @@
         </div>
     </div>
 </div>
-<script src="https://code.jquery.com/jquery-3.5.0.js"></script>
+
 <script type="text/javascript" src="/js/index.js"></script>
-<script type="text/javascript" src="/js/jquery.js"></script>
 </body>
 </html>
