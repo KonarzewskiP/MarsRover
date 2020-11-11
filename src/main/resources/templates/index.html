@@ -10,13 +10,9 @@
 
 <div class="container">
     <h2>Welcome to the Mars Rover API Web App</h2>
-<!-- method=get send parameters to url address. Since we are using "post" we need to get parameters from the object.
- in this case homeDto. -->
     <form method="post" action="" id="frmRoverType">
-        <!--  th:field load the data from controller class -->
         <input type="hidden" th:field="${homeDto.marsApiRoverData}"/>
         <input type="hidden" th:field="${homeDto.userId}"/>
-        <!--<input type="hidden"  id="marsApiRoverData" name="marsApiRoverData" value=""/>-->
         <div class="btn-group btn-group-lg" role="group" aria-label="Basic example" style="margin: 2em 0em">
             <button type="button" class="btn btn-secondary" id="marsApiCuriosity">Curiosity</button>
             <button type="button" class="btn btn-secondary" id="marsApiOpportunity">Opportunity</button>
@@ -28,7 +24,6 @@
                 <div class="form-check">
                     <input class="form-check-input" type="checkbox" th:field="${homeDto.cameraFhaz}"
                            th:attr="disabled=${!#lists.contains(validCameras,'FHAZ' ) ? 'disabled' : 'false'}">
-                    <!--            <input class="form-check-input" type="checkbox" value="" id="defaultCheck1" name="defaultCheck1">-->
                     <label class="form-check-label" for="cameraFhaz1">
                         Front Hazard Avoidance Camera
                     </label>
@@ -116,7 +111,6 @@
         <div class="form-group">
             <label for="marsSol" class="col-form-label-lg"> Mars Sol (aka Mars Day):</label>
             <input class="form-control form-control-lg" type="number" th:field="${homeDto.marsSol}" min="0" />
-            <!--            <input  class="form-control form-control-lg" type="number" id="marsSol" name="marsSol" min="1" value="1"/>-->
         </div>
         <div class="row">
             <div class="col-3 col-md-2">
@@ -130,8 +124,6 @@
 
     </form>
 
-    <!--    <img th:each="photo : ${roverData.photos}" th:src="${photo.imgSrc}">-->
-    <!--  index to nazwa pojedynczego elementu -->
     <div th:each="index : ${#numbers.sequence(0,roverData.photos.size(),4)} " class="row" style="margin-bottom: 2em">
         <div class="col-sm" th:if="${index < roverData.photos.size()}">
             <img th:src="${roverData.photos[index].imgSrc}" class="img-fluid">

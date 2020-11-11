@@ -1,12 +1,10 @@
-package konarzewski.udemyrover.dto;
+package konarzewski.nasa_rover.dto;
 
 import lombok.Getter;
 import lombok.Setter;
 import lombok.ToString;
 
 import javax.persistence.*;
-import java.util.ArrayList;
-import java.util.List;
 
 @Getter
 @Setter
@@ -22,7 +20,6 @@ public class HomeDto {
     private String marsApiRoverData;
     private Integer marsSol;
 
-//    private List<Camera> cameras = new ArrayList<>();
 
     private Boolean cameraFhaz;
     private Boolean cameraRhaz;
@@ -34,9 +31,5 @@ public class HomeDto {
     private Boolean cameraPancam;
     private Boolean cameraMinites;
     private Boolean rememberPreferences;
-
-//    public void addNewCamera(Camera camera){
-//        cameras.add(camera);
-//    }
 
 }

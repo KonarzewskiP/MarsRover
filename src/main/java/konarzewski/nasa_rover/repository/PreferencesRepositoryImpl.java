@@ -1,4 +1,4 @@
-package konarzewski.udemyrover.repository;
+package konarzewski.nasa_rover.repository;
 
 public class PreferencesRepositoryImpl {
 }

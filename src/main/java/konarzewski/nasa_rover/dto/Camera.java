@@ -1,4 +1,4 @@
-package konarzewski.udemyrover.dto;
+package konarzewski.nasa_rover.dto;
 
 import lombok.AllArgsConstructor;
 import lombok.Getter;

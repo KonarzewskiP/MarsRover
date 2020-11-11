@@ -1,13 +1,13 @@
-package konarzewski.udemyrover;
+package konarzewski.nasa_rover;
 
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 
 @SpringBootApplication
-public class UdemyroverApplication {
+public class NASARoverApp {
 
     public static void main(String[] args) {
-        SpringApplication.run(UdemyroverApplication.class, args);
+        SpringApplication.run(NASARoverApp.class, args);
     }
 
 }

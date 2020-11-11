@@ -1,4 +1,4 @@
-package konarzewski.udemyrover.response;
+package konarzewski.nasa_rover.response;
 
 import lombok.Getter;
 import lombok.Setter;

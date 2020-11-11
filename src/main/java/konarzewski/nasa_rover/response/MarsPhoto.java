@@ -1,4 +1,4 @@
-package konarzewski.udemyrover.response;
+package konarzewski.nasa_rover.response;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
 import lombok.Getter;
